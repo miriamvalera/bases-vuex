@@ -7,7 +7,8 @@ export default createStore({
         count: 1,
         lastMutation: 'none',
         isLoading: false,
-        lastRandomInt: 0
+        lastRandomInt: 0,
+        colorLetra: false
     },
 
     mutations: {
@@ -19,13 +20,19 @@ export default createStore({
             state.count += val
             state.lastMutation = 'incrementBy ' + val
             state.lastRandomInt = val
-        }   
+        }, 
+        setLoading( state, loading ) {
+            state.isLoading = loading
+            state.lastMutation = 'setLoading' + loading
+        }
     },
 
     actions: {
-        async incrementRandomInt( context ) {
+        async incrementRandomInt( { commit } ) {
+            commit('setLoading', true)
             const randomInt = await getRandomInt()
-            context.commit('incrementBy', randomInt)
+            commit('incrementBy', randomInt)
+            commit('setLoading', false)
         }
     }
 
