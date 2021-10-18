@@ -7,8 +7,7 @@ export default createStore({
         count: 1,
         lastMutation: 'none',
         isLoading: false,
-        lastRandomInt: 0,
-        colorLetra: false
+        lastRandomInt: 0
     },
 
     mutations: {
@@ -33,6 +32,12 @@ export default createStore({
             const randomInt = await getRandomInt()
             commit('incrementBy', randomInt)
             commit('setLoading', false)
+        }
+    },
+
+    getters: {
+        squareCount( state ) {
+            return state.count * state.count
         }
     }
 
